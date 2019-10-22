@@ -43,35 +43,25 @@ class Game
 
 
    def turn
-         puts "Please enter 1-9:"
-         input = gets.strip
-         location = input_to_location(input)
-         if board.valid_move?(location)
+  puts "Please enter a number 1-9:"
+  @user_input = current_player.move(@board)
+  if @board.valid_move?(@user_input)
+    @board.update(@user_input, current_player)
+  else puts "Please enter a number 1-9:"
+    @board.display
+    turn
+  end
+  @board.display
+end
 
-           player = current_player
-           move(index, player)
-           board.display
-         else
-           turn
-         end
-     end
-
-
-    #  def play
-    #    board.reset!
-    #    system('clear')
-    #    puts "Game #{@counter}" if @wargame
-    #    board.display
-    #    until over?
-    #      turn
-    #    end
-    #    if draw?
-    #      puts "WINNER: NONE"
-    #    elsif won?
-    #      puts "WINNER: #{winner}"
-    #    end
-    #  end
-
+def play
+  turn until over?
+  if won?
+    puts "Congratulations #{winner}!"
+  elsif draw?
+    puts "Cat's Game!"
+  end
+end
 
 
 end
